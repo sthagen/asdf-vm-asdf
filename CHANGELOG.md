@@ -1,5 +1,75 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/sthagen/asdf-vm-asdf/compare/v0.5.1...v0.6.0) (2021-11-18)
+
+
+### Features
+
+* add post update plugin support ([#1049](https://www.github.com/sthagen/asdf-vm-asdf/issues/1049)) ([304f72d](https://www.github.com/sthagen/asdf-vm-asdf/commit/304f72dbb207606fd82c04ee2c73cf11e9e6e0cc))
+* asdf latest defer to plugin to determine the latest version ([#938](https://www.github.com/sthagen/asdf-vm-asdf/issues/938)) ([664d82e](https://www.github.com/sthagen/asdf-vm-asdf/commit/664d82ed8a734eb30988840829a972f8ddd8e523))
+* cmd to print debug information ([#787](https://www.github.com/sthagen/asdf-vm-asdf/issues/787)) ([8ca2af3](https://www.github.com/sthagen/asdf-vm-asdf/commit/8ca2af3316be03f980598c5dbcb8152b6b56e96a))
+* configurable plugin repo last check time ([#957](https://www.github.com/sthagen/asdf-vm-asdf/issues/957)) ([1716afa](https://www.github.com/sthagen/asdf-vm-asdf/commit/1716afa02125aa322d8a688ff4b3e95f2e08b33c))
+* display plugin repo refs alongside urls in info cmd ([#1014](https://www.github.com/sthagen/asdf-vm-asdf/issues/1014)) ([cd0a6a7](https://www.github.com/sthagen/asdf-vm-asdf/commit/cd0a6a779eb18236fe7bf1f84403e33e636ef1f3))
+* Displays a warning when a plugin from the tools-version list does not exist ([#1033](https://www.github.com/sthagen/asdf-vm-asdf/issues/1033)) ([9430a39](https://www.github.com/sthagen/asdf-vm-asdf/commit/9430a39aef1dbf806a8954d71711747be1001076))
+* plugin documentation callback support 🎉 ([#757](https://www.github.com/sthagen/asdf-vm-asdf/issues/757)) ([cc0023b](https://www.github.com/sthagen/asdf-vm-asdf/commit/cc0023b022c6db52ab46885430805fe7e0804bfc))
+* support for "latest" in shell, local, and global ([#802](https://www.github.com/sthagen/asdf-vm-asdf/issues/802)) ([0edb505](https://www.github.com/sthagen/asdf-vm-asdf/commit/0edb50547c21b3c7f4f1379b898b7fef7e9a2da3))
+* toggle off repo sync completely ([#1011](https://www.github.com/sthagen/asdf-vm-asdf/issues/1011)) ([a3ba5a7](https://www.github.com/sthagen/asdf-vm-asdf/commit/a3ba5a794c07efb4aa9cce9c15d41b4b61d5df01))
+
+
+### Bug Fixes
+
+* _where_ bug when multiple versions are selected ([#790](https://www.github.com/sthagen/asdf-vm-asdf/issues/790)) ([77a748d](https://www.github.com/sthagen/asdf-vm-asdf/commit/77a748d70a8c9ddf9588546801c5535b5d1edb3a)), closes [#690](https://www.github.com/sthagen/asdf-vm-asdf/issues/690)
+* <plugin update all> to latest commit on default branch for each plugin ([#800](https://www.github.com/sthagen/asdf-vm-asdf/issues/800)) ([456d8e3](https://www.github.com/sthagen/asdf-vm-asdf/commit/456d8e36ca76b36b848453a63b54ffeb214bce7e))
+* Adds "grep -P" to the list of banned commands ([#1064](https://www.github.com/sthagen/asdf-vm-asdf/issues/1064)) ([8a515f4](https://www.github.com/sthagen/asdf-vm-asdf/commit/8a515f49d7443ee318badbd4d8f092ad0d8f04ca))
+* allow plugin callbacks to be in any language ([#995](https://www.github.com/sthagen/asdf-vm-asdf/issues/995)) ([2ad0f5e](https://www.github.com/sthagen/asdf-vm-asdf/commit/2ad0f5ea452bd8f843951c4a9cc56a020e172b07))
+* also fix bug with cleaning up old versions ([4e9d04c](https://www.github.com/sthagen/asdf-vm-asdf/commit/4e9d04ccaa1a4f66f09bc9fbff10c0cb253fd512))
+* asdf shell command docs & help output ([#737](https://www.github.com/sthagen/asdf-vm-asdf/issues/737)) ([f5c7dae](https://www.github.com/sthagen/asdf-vm-asdf/commit/f5c7dae331af14563de141dc0500234bab03f4a7))
+* ban the sort -V command ([#755](https://www.github.com/sthagen/asdf-vm-asdf/issues/755)) ([aef4ae8](https://www.github.com/sthagen/asdf-vm-asdf/commit/aef4ae8b5abced2225ea0359b643cf9901558074))
+* broken link in contributing.md ([#852](https://www.github.com/sthagen/asdf-vm-asdf/issues/852)) ([90b92b9](https://www.github.com/sthagen/asdf-vm-asdf/commit/90b92b99be8fb8f482e0c41e5e867302ed97806e))
+* check shims for the full version ([e5863f3](https://www.github.com/sthagen/asdf-vm-asdf/commit/e5863f3701ffdbb9dd32a28a89d09406dc16fbe1)), closes [#517](https://www.github.com/sthagen/asdf-vm-asdf/issues/517)
+* CI formatting use editorconfig ([#751](https://www.github.com/sthagen/asdf-vm-asdf/issues/751)) ([50feef2](https://www.github.com/sthagen/asdf-vm-asdf/commit/50feef2a777af222ad6a73c19dc113e0c100a012))
+* clarify the wording when no version is set ([#1088](https://www.github.com/sthagen/asdf-vm-asdf/issues/1088)) ([4116284](https://www.github.com/sthagen/asdf-vm-asdf/commit/41162849cf5c966c749ec435ebe32bd649a86ee8))
+* completions for asdf plugin list ([#1061](https://www.github.com/sthagen/asdf-vm-asdf/issues/1061)) ([43412aa](https://www.github.com/sthagen/asdf-vm-asdf/commit/43412aad5f668686daa058505a61c070561b46fc))
+* consistent system completion ([#911](https://www.github.com/sthagen/asdf-vm-asdf/issues/911)) ([f4a80b5](https://www.github.com/sthagen/asdf-vm-asdf/commit/f4a80b53df851e4d2af7921211b60d48773ccb8d))
+* consistent use of plugin_name ([c69ed91](https://www.github.com/sthagen/asdf-vm-asdf/commit/c69ed91886f6977c539c5c81e90c0de1eaf6f008))
+* Correct typo on getting started page ([#1086](https://www.github.com/sthagen/asdf-vm-asdf/issues/1086)) ([4321980](https://www.github.com/sthagen/asdf-vm-asdf/commit/4321980c3385ac1bafd77503c8ec77b26042d05b))
+* delete instructions to add dependencies with Homebrew ([#937](https://www.github.com/sthagen/asdf-vm-asdf/issues/937)) ([24d79d4](https://www.github.com/sthagen/asdf-vm-asdf/commit/24d79d4d9256d7d130fbaf8a4b7dc34aeb1b01d7))
+* docs file rename ([#809](https://www.github.com/sthagen/asdf-vm-asdf/issues/809)) ([2bf076f](https://www.github.com/sthagen/asdf-vm-asdf/commit/2bf076f3d33087966cdb4de52cfdf0042eb7c076))
+* don't override existing ASDF_DIR ([#1008](https://www.github.com/sthagen/asdf-vm-asdf/issues/1008)) ([73efc9f](https://www.github.com/sthagen/asdf-vm-asdf/commit/73efc9fa97744c49c5004ee8bb9b6064b6ce22f2))
+* ensure shims get created when data dir has spaces ([#996](https://www.github.com/sthagen/asdf-vm-asdf/issues/996)) ([39c9999](https://www.github.com/sthagen/asdf-vm-asdf/commit/39c9999519a1d3c51ffb3b8dddd141dbc29b3bd1))
+* fish init command ([#792](https://www.github.com/sthagen/asdf-vm-asdf/issues/792)) ([1479ec8](https://www.github.com/sthagen/asdf-vm-asdf/commit/1479ec83be6f39776a99d0b8da6fa59580586d93))
+* Fix plugin-test arg parsing ([#1084](https://www.github.com/sthagen/asdf-vm-asdf/issues/1084)) ([c911f2d](https://www.github.com/sthagen/asdf-vm-asdf/commit/c911f2d43198945f21bb25100c9dab5a375c780b))
+* format command-reshim ([43d6fef](https://www.github.com/sthagen/asdf-vm-asdf/commit/43d6fef000a2d7ab5ab2cc662f7d066d3489e8b1))
+* full_version_name is not available here ([#1031](https://www.github.com/sthagen/asdf-vm-asdf/issues/1031)) ([8490526](https://www.github.com/sthagen/asdf-vm-asdf/commit/84905265467c9fdf618c11f69a5ae71408e18bea))
+* help for extension commands for plugins with hyphens in the name. ([#1048](https://www.github.com/sthagen/asdf-vm-asdf/issues/1048)) ([3e0cb9a](https://www.github.com/sthagen/asdf-vm-asdf/commit/3e0cb9aaea7f2bf282a18c4912454737fef0741b))
+* help text as per new feats in [#633](https://www.github.com/sthagen/asdf-vm-asdf/issues/633) ([#991](https://www.github.com/sthagen/asdf-vm-asdf/issues/991)) ([0d95663](https://www.github.com/sthagen/asdf-vm-asdf/commit/0d956635b5cabe35f0895121929e8e668a3ee03d))
+* incorrect usage of grep ([#1035](https://www.github.com/sthagen/asdf-vm-asdf/issues/1035)) ([30d27cb](https://www.github.com/sthagen/asdf-vm-asdf/commit/30d27cbe6b358cd790fb66dbc8a14806eca23f05))
+* incorrect version output in asdf current ([#746](https://www.github.com/sthagen/asdf-vm-asdf/issues/746)) ([e9c149e](https://www.github.com/sthagen/asdf-vm-asdf/commit/e9c149ea212cf5bf822bbce8d01aae88caaa30b2))
+* insert error handling in list-all & download plugin scripts ([#881](https://www.github.com/sthagen/asdf-vm-asdf/issues/881)) ([a7d3661](https://www.github.com/sthagen/asdf-vm-asdf/commit/a7d3661f6c53b24ae1c21e93f94209f3af243349))
+* lint scripts for local and CI ([#961](https://www.github.com/sthagen/asdf-vm-asdf/issues/961)) ([5dafbc8](https://www.github.com/sthagen/asdf-vm-asdf/commit/5dafbc8e390eacbcfcf97d6d2890e0aa6ef9cd60))
+* pipe find into while ([26d2c64](https://www.github.com/sthagen/asdf-vm-asdf/commit/26d2c64477a1faabedd9a5f97aa7da706988cd72))
+* plugin test to emit error message when `latest` fails ([#772](https://www.github.com/sthagen/asdf-vm-asdf/issues/772)) ([1a01356](https://www.github.com/sthagen/asdf-vm-asdf/commit/1a01356935aef4eeae9a5172c063d1f4651ee149)), closes [#756](https://www.github.com/sthagen/asdf-vm-asdf/issues/756)
+* plugin update portability ([#924](https://www.github.com/sthagen/asdf-vm-asdf/issues/924)) ([d7b62d2](https://www.github.com/sthagen/asdf-vm-asdf/commit/d7b62d2e920d2395f8812e5a5ff9d34b2986c452))
+* print tool-versions file dir on shim error ([#750](https://www.github.com/sthagen/asdf-vm-asdf/issues/750)) ([a5c815b](https://www.github.com/sthagen/asdf-vm-asdf/commit/a5c815b6d47c47f416006bad2de4b6955af65490))
+* Quote commands correctly in plugin-test ([#1078](https://www.github.com/sthagen/asdf-vm-asdf/issues/1078)) ([69ff2d0](https://www.github.com/sthagen/asdf-vm-asdf/commit/69ff2d0c9a4fd273c9dac151345f60f7b146e569))
+* regex validate plugin names on plugin add cmd ([#1010](https://www.github.com/sthagen/asdf-vm-asdf/issues/1010)) ([7697e6e](https://www.github.com/sthagen/asdf-vm-asdf/commit/7697e6e344809ab4603d0764fb8a969c2bbaf3b6))
+* remove `column` command in favor of awk ([#721](https://www.github.com/sthagen/asdf-vm-asdf/issues/721)) ([1b7b4da](https://www.github.com/sthagen/asdf-vm-asdf/commit/1b7b4da0a6ac7e878acd556aa47bc71a4d49d4fc))
+* remove automatic compinit ([#678](https://www.github.com/sthagen/asdf-vm-asdf/issues/678)) ([3246c26](https://www.github.com/sthagen/asdf-vm-asdf/commit/3246c26d52f0d0368110ac96f82d60301b8f6bc8))
+* remove find -print0 ([b9228a2](https://www.github.com/sthagen/asdf-vm-asdf/commit/b9228a26de6a0337a7b59fb5252323d368a72a92))
+* remove sort --version-sort from command-latest as list is already sorted ([#700](https://www.github.com/sthagen/asdf-vm-asdf/issues/700)) ([0f80ac3](https://www.github.com/sthagen/asdf-vm-asdf/commit/0f80ac356730a3a04a378b39a6d964d5938832b6))
+* revert to commands to precompute brew prefix on addition to shell config ([1a4c1c1](https://www.github.com/sthagen/asdf-vm-asdf/commit/1a4c1c15b8505cfe193953db54419cd8406671a1))
+* rm asdf current header row for now ([#793](https://www.github.com/sthagen/asdf-vm-asdf/issues/793)) ([b178cb0](https://www.github.com/sthagen/asdf-vm-asdf/commit/b178cb07a7e9e446bea9e2e3e9090dde52994141))
+* Sed improvements ([#1087](https://www.github.com/sthagen/asdf-vm-asdf/issues/1087)) ([4b93bc8](https://www.github.com/sthagen/asdf-vm-asdf/commit/4b93bc81aa982b72621cd09e71eeea71ee009185))
+* sed re error trailing backslash on FreeBSD ([#1046](https://www.github.com/sthagen/asdf-vm-asdf/issues/1046)). ([#1047](https://www.github.com/sthagen/asdf-vm-asdf/issues/1047)) ([47e8fb0](https://www.github.com/sthagen/asdf-vm-asdf/commit/47e8fb051b3577d251376976d5767c520f3524fc))
+* shellcheck errors and typo ([6af66dc](https://www.github.com/sthagen/asdf-vm-asdf/commit/6af66dc88cc079de560f08f53734709b22d212ba))
+* shims break when POSIXLY_CORRECT=1 ([0de6910](https://www.github.com/sthagen/asdf-vm-asdf/commit/0de6910d1f99c9576f8c2e5a916644fed99cddb5)), closes [#581](https://www.github.com/sthagen/asdf-vm-asdf/issues/581)
+* support latest with filter on local and global ([#633](https://www.github.com/sthagen/asdf-vm-asdf/issues/633)) ([5cf8f89](https://www.github.com/sthagen/asdf-vm-asdf/commit/5cf8f8962fbd5fe2bc86856bc4676f88e1aa8885))
+* typo and refactor on top of master ([0c263ad](https://www.github.com/sthagen/asdf-vm-asdf/commit/0c263ad70090dd832215ff20f12dd4e14855fdbe))
+* typo causing plugin-test to erroneously fail ([b6deb14](https://www.github.com/sthagen/asdf-vm-asdf/commit/b6deb141b53e63be92ac5bd5ef80818cd218e212))
+* typo in subshell for fish instructions ([a76880d](https://www.github.com/sthagen/asdf-vm-asdf/commit/a76880d25a3f58ec01147eab8b01f34503b903bd))
+* Use more idiomatic fish ([#1042](https://www.github.com/sthagen/asdf-vm-asdf/issues/1042)) ([847ec73](https://www.github.com/sthagen/asdf-vm-asdf/commit/847ec73751ced9d149ce0826309fee0f894ca664))
+* wait until the plugin update are finished ([#1037](https://www.github.com/sthagen/asdf-vm-asdf/issues/1037)) ([7e1f2a0](https://www.github.com/sthagen/asdf-vm-asdf/commit/7e1f2a0d938052d4fa5ce6546f07b3decbd740cf))
+
 ## 0.8.1
 
 Features
