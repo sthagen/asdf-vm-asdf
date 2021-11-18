@@ -1,117 +1,87 @@
 #!/usr/bin/env bash
 
-# shellcheck source=lib/utils.sh
-source "$(dirname "$(dirname "$0")")/lib/utils.sh"
+# shellcheck source=lib/utils.bash
+. "$(dirname "$(dirname "$0")")/lib/utils.bash"
 
-# shellcheck source=lib/commands/help.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/help.sh"
-# shellcheck source=lib/commands/update.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/update.sh"
-# shellcheck source=lib/commands/install.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/install.sh"
-# shellcheck source=lib/commands/uninstall.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/uninstall.sh"
-# shellcheck source=lib/commands/current.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/current.sh"
-# shellcheck source=lib/commands/where.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/where.sh"
-# shellcheck source=lib/commands/which.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/which.sh"
-# shellcheck source=lib/commands/version_commands.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/version_commands.sh"
-# shellcheck source=lib/commands/list.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/list.sh"
-# shellcheck source=lib/commands/list-all.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/list-all.sh"
-# shellcheck source=lib/commands/reshim.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/reshim.sh"
-# shellcheck source=lib/commands/plugin-add.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/plugin-add.sh"
-# shellcheck source=lib/commands/plugin-list.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/plugin-list.sh"
-# shellcheck source=lib/commands/plugin-list-all.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/plugin-list-all.sh"
-# shellcheck source=lib/commands/plugin-update.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/plugin-update.sh"
-# shellcheck source=lib/commands/plugin-remove.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/plugin-remove.sh"
+find_cmd() {
+  local cmd_dir="$1"
+  shift
 
-# shellcheck source=lib/commands/plugin-push.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/plugin-push.sh"
-# shellcheck source=lib/commands/plugin-test.sh
-source "$(dirname "$(dirname "$0")")/lib/commands/plugin-test.sh"
+  local cmd_name
+  local args_offset="$#"
+  cmd_name="command-$(tr ' ' '-' <<<"${@:1:${args_offset}}").bash"
+  while [ ! -f "$cmd_dir/$cmd_name" ] && [ "$args_offset" -gt 0 ]; do
+    args_offset=$((args_offset - 1))
+    cmd_name="command-$(tr ' ' '-' <<<"${@:1:${args_offset}}").bash"
+  done
 
-# shellcheck disable=SC2124
-callback_args="${@:2}"
+  if [ -f "$cmd_dir/$cmd_name" ]; then
+    printf "%s %s\\n" "$cmd_dir/$cmd_name" "$((args_offset + 1))"
+  elif [ -f "$cmd_dir/command.bash" ]; then
+    printf "%s %s\\n" "$cmd_dir/command.bash" 1
+  fi
+}
 
-# shellcheck disable=SC2086
-case $1 in
+find_asdf_cmd() {
+  local asdf_cmd_dir
+  asdf_cmd_dir="$(asdf_dir)/lib/commands"
+  case "$1" in
+  'exec' | 'current' | 'env' | 'global' | 'install' | 'latest' | 'local' | \
+    'reshim' | 'uninstall' | 'update' | 'where' | 'which' | \
+    'export-shell-version')
+    printf "%s %s\\n" "$asdf_cmd_dir/command-$1.bash" 2
+    ;;
 
-"--version")
-    asdf_version $callback_args;;
+  '' | '--help' | '-h' | 'help')
+    printf "%s %s\\n" "$asdf_cmd_dir/command-help.bash" 2
+    ;;
 
-"help")
-    help_command $callback_args;;
+  '--version' | 'version')
+    printf "%s %s\\n" "$asdf_cmd_dir/command-version.bash" 2
+    ;;
 
-"update")
-    update_command $callback_args;;
+  *)
+    find_cmd "$asdf_cmd_dir" "$@"
+    ;;
+  esac
+}
 
-"install")
-    install_command $callback_args;;
+find_plugin_cmd() {
+  local ASDF_CMD_FILE args_offset
+  if [ -d "$(get_plugin_path "$1")/bin" ]; then
+    IFS=' ' read -r ASDF_CMD_FILE args_offset <<<"$(find_cmd "$(get_plugin_path "$1")/lib/commands" "${@:2}")"
+    if [ -n "$ASDF_CMD_FILE" ]; then
+      args_offset=$((args_offset + 1)) # since the first argument is the plugin name
+      printf "%s %s\\n" "$ASDF_CMD_FILE" "$args_offset"
+    fi
+  fi
+}
 
-"uninstall")
-    uninstall_command $callback_args;;
+asdf_cmd() {
+  local ASDF_CMD_FILE args_offset
 
-"current")
-    current_command $callback_args;;
+  if [ "shell" == "$1" ]; then
+    printf "Shell integration is not enabled. Please ensure you source asdf in your shell setup." >&2
+    exit 1
+  fi
 
-"where")
-    where_command $callback_args;;
+  IFS=' ' read -r ASDF_CMD_FILE args_offset <<<"$(find_asdf_cmd "$@")"
+  if [ -z "$ASDF_CMD_FILE" ]; then
+    IFS=' ' read -r ASDF_CMD_FILE args_offset <<<"$(find_plugin_cmd "$@")"
+  fi
 
-"which")
-    which_command $callback_args;;
+  if [ -x "$ASDF_CMD_FILE" ]; then
+    exec "$ASDF_CMD_FILE" "${@:${args_offset}}"
+  elif [ -f "$ASDF_CMD_FILE" ]; then
+    set -- "${@:${args_offset}}"
+    . "$ASDF_CMD_FILE"
+  else
+    local asdf_cmd_dir
+    asdf_cmd_dir="$(asdf_dir)/lib/commands"
+    printf "%s\\n" "Unknown command: \`asdf ${*}\`" >&2
+    . "$asdf_cmd_dir/command-help.bash" >&2
+    return 127
+  fi
+}
 
-"local")
-    local_command $callback_args;;
-
-"global")
-    global_command $callback_args;;
-
-"list")
-    list_command $callback_args;;
-
-"list-all")
-    list_all_command $callback_args;;
-
-"shim")
-    shim_command $callback_args;;
-
-"reshim")
-    reshim_command $callback_args;;
-
-"plugin-add")
-    plugin_add_command $callback_args;;
-
-"plugin-list")
-    plugin_list_command $callback_args;;
-
-"plugin-list-all")
-    plugin_list_all_command $callback_args;;
-
-"plugin-update")
-    plugin_update_command $callback_args;;
-
-"plugin-remove")
-    plugin_remove_command $callback_args;;
-
-# Undocumented commands for development
-"plugin-push")
-    plugin_push_command $callback_args;;
-
-"plugin-test")
-    plugin_test_command $callback_args;;
-
-*)
-  help_command
-  exit 1;;
-esac
+asdf_cmd "$@"

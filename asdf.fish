@@ -1,13 +1,27 @@
-#!/usr/bin/env fish
+set -x ASDF_DIR (dirname (status -f))
 
-set -l asdf_dir (dirname (status -f))
-
-# we get an ugly warning when setting the path if shims does not exist
-mkdir -p $asdf_dir/shims
-
-for x in $asdf_dir/{bin,shims}
-  if not contains $x $PATH
-  and test -d $x
-    set -gx PATH $x $PATH
+set -l asdf_user_shims (
+  if test -n "$ASDF_DATA_DIR"
+    echo $ASDF_DATA_DIR/shims
+  else
+    echo $HOME/.asdf/shims
   end
+)
+
+# Add asdf to PATH
+set -l asdf_bin_dirs $ASDF_DIR/bin $asdf_user_shims
+
+for x in $asdf_bin_dirs
+  if test -d $x
+    for i in (seq 1 (count $PATH))
+      if test $PATH[$i] = $x
+        set -e PATH[$i]
+        break
+      end
+    end
+  end
+  set PATH $x $PATH
 end
+
+# Load the asdf wrapper function
+. $ASDF_DIR/lib/asdf.fish
