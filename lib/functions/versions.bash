@@ -24,7 +24,7 @@ version_command() {
   elif [ "$cmd" = "local-tree" ]; then
     file=$(find_tool_versions)
   else # cmd = local
-    file="$(pwd)/$file_name"
+    file="$PWD/$file_name"
   fi
 
   if [ -L "$file" ]; then
@@ -65,7 +65,7 @@ version_command() {
     rm -f "$file".bak
   else
     # Add a trailing newline at the end of the file if missing
-    [[ -n "$(tail -c1 "$file")" && -f "$file" ]] && printf '\n' >>"$file"
+    [[ -f "$file" && -n "$(tail -c1 "$file")" ]] && printf '\n' >>"$file"
 
     # Add a new version line to the end of the file
     printf "%s %s\n" "$plugin_name" "${resolved_versions[*]}" >>"$file"
