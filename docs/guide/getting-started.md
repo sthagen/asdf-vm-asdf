@@ -35,7 +35,7 @@ asdf primarily requires `git` & `curl`. Here is a _non-exhaustive_ list of comma
 <!-- x-release-please-start-version -->
 
 ```shell:no-line-numbers
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.1
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.2
 ```
 
 <!-- x-release-please-end -->
@@ -312,10 +312,11 @@ For demonstration purposes we will install & set [Node.js](https://nodejs.org/) 
 
 Each plugin has dependencies so we need to check the plugin repo where they should be listed. For `asdf-nodejs` they are:
 
-| OS             | Dependency Installation                 |
-| -------------- | --------------------------------------- |
-| Linux (Debian) | `apt-get install dirmngr gpg curl gawk` |
-| macOS          | `brew install gpg gawk`                 |
+| OS                             | Dependency Installation                 |
+| ------------------------------ | --------------------------------------- |
+| Debian                         | `apt-get install dirmngr gpg curl gawk` |
+| CentOS/ Rocky Linux/ AlmaLinux | `yum install gnupg2 curl gawk`          |
+| macOS                          | `brew install gpg gawk`                 |
 
 We should install dependencies first as some Plugins have post-install hooks.
 
