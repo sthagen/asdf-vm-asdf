@@ -35,7 +35,7 @@ asdf primarily requires `git` & `curl`. Here is a _non-exhaustive_ list of comma
 <!-- x-release-please-start-version -->
 
 ```shell:no-line-numbers
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.2
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.3
 ```
 
 <!-- x-release-please-end -->
@@ -261,6 +261,39 @@ echo -e "\n. $(brew --prefix asdf)/libexec/asdf.sh" >> ${ZDOTDIR:-~}/.zshrc
 ```
 
 补全功能会被放在一个对 ZSH 很友好的位置，但是 [ZSH 必须使用自动补全完成配置](https://wiki.archlinux.org/index.php/zsh#Command_completion)。
+:::
+
+::: details POSIX Shell & Git
+
+在 `~/.profile` 文件中加入以下内容：
+
+```shell
+export ASDF_DIR="$HOME/.asdf"
+. "$HOME/.asdf/asdf.sh"
+```
+
+:::
+
+::: details POSIX Shell & Homebrew
+
+使用以下命令将 `asdf.sh` 加入到 `~/.profile` 文件中：
+
+```shell:no-line-numbers
+echo -e "\nexport ASDF_DIR=\"$(brew --prefix asdf)/libexec/asdf.sh\"" >> ~/.profile
+echo -e "\n. \"$(brew --prefix asdf)/libexec/asdf.sh\"" >> ~/.profile
+```
+
+:::
+
+::: details POSIX Shell & Pacman
+
+在 `~/.profile` 文件中加入以下内容：
+
+```shell
+export ASDF_DIR="/opt/asdf-vm"
+. /opt/asdf-vm/asdf.sh
+```
+
 :::
 
 `asdf` 脚本需要在设置好的 `$PATH` **之后**和已经生效的框架（比如 oh-my-zsh 等等）**之后**的位置生效。

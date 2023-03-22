@@ -7,8 +7,8 @@ def-env configure-asdf [] {
     let asdf_bin_dir = ( $env.ASDF_DIR | path join 'bin' )
 
 
-    let-env PATH = ( $env.PATH | split row (char esep) | where { |p| $p != $shims_dir } | append $shims_dir )
-    let-env PATH = ( $env.PATH | split row (char esep) | where { |p| $p != $asdf_bin_dir } | append $asdf_bin_dir )
+    let-env PATH = ( $env.PATH | split row (char esep) | where { |p| $p != $shims_dir } | prepend $shims_dir )
+    let-env PATH = ( $env.PATH | split row (char esep) | where { |p| $p != $asdf_bin_dir } | prepend $asdf_bin_dir )
 
 }
 
@@ -99,7 +99,7 @@ module asdf {
 
     # list all available plugins
     export def "asdf plugin list all" [] {
-        let template = '(?P<name>.+)\s+?(?P<installed>[*]?)(?P<repository>(?:git|http).+\.git)'
+        let template = '(?P<name>.+)\s+?(?P<installed>[*]?)(?P<repository>(?:git|http|https).+)'
         let is_installed = { |it| $it.installed == '*' }
 
         ^asdf plugin list all |

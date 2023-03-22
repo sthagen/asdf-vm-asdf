@@ -35,7 +35,7 @@ asdf primarily requires `git` & `curl`. Here is a _non-exhaustive_ list of comma
 <!-- x-release-please-start-version -->
 
 ```shell:no-line-numbers
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.2
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.3
 ```
 
 <!-- x-release-please-end -->
@@ -277,7 +277,7 @@ Completions are automatically configured
 Add `asdf.nu` to your `~/.config/nushell/config.nu` with:
 
 ```shell:no-line-numbers
-"\nlet-env ASDF_NU_DIR = (brew --prefix asdf | into string | path join 'libexec')\n source " +  (brew --prefix asdf | into string | path join 'libexec/asdf.nu') | save --append $nu.config-path
+"\nlet-env ASDF_NU_DIR = (brew --prefix asdf | str trim | into string | path join 'libexec')\n source " +  (brew --prefix asdf | into string | path join 'libexec/asdf.nu') | save --append $nu.config-path
 ```
 
 Completions are automatically configured
@@ -292,6 +292,39 @@ Add `asdf.nu` to your `~/.config/nushell/config.nu` with:
 ```
 
 Completions are automatically configured.
+:::
+
+::: details POSIX Shell & Git
+
+Add the following to `~/.profile`:
+
+```shell
+export ASDF_DIR="$HOME/.asdf"
+. "$HOME/.asdf/asdf.sh"
+```
+
+:::
+
+::: details POSIX Shell & Homebrew
+
+Add `asdf.sh` to your `~/.profile` with:
+
+```shell:no-line-numbers
+echo -e "\nexport ASDF_DIR=\"$(brew --prefix asdf)/libexec/asdf.sh\"" >> ~/.profile
+echo -e "\n. \"$(brew --prefix asdf)/libexec/asdf.sh\"" >> ~/.profile
+```
+
+:::
+
+::: details POSIX Shell & Pacman
+
+Add the following to `~/.profile`:
+
+```shell
+export ASDF_DIR="/opt/asdf-vm"
+. /opt/asdf-vm/asdf.sh
+```
+
 :::
 
 `asdf` scripts need to be sourced **after** you have set your `$PATH` and **after** you have sourced your framework (oh-my-zsh etc).
