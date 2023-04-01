@@ -47,7 +47,7 @@ if [ -z "$ASDF_DIR" ]; then
 fi
 
 if [ -z "$ASDF_DIR" ]; then
-  printf "%s\n" "asdf: Error: Source directory could not be calculated. Please set it manually before sourcing this file." >&2
+  printf "%s\n" "asdf: Error: Source directory could not be calculated. Please set \$ASDF_DIR manually before sourcing this file." >&2
   return 1
 fi
 
@@ -56,22 +56,35 @@ if [ ! -d "$ASDF_DIR" ]; then
   return 1
 fi
 
-_asdf_bin="${ASDF_DIR}/bin"
+_asdf_bin="$ASDF_DIR/bin"
 _asdf_shims="${ASDF_DATA_DIR:-$HOME/.asdf}/shims"
 
-# shellcheck disable=SC3060
-if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
-  case ":$PATH:" in
-    *":${_asdf_bin}:"*) PATH="${PATH//$_asdf_bin:/}" ;;
-  esac
-  case ":$PATH:" in
-    *":${_asdf_shims}:"*) PATH="${PATH//$_asdf_shims:/}" ;;
-  esac
-fi
+case ":$PATH:" in
+  *":$_asdf_bin:"*) : ;;
+  *) PATH="$_asdf_bin:$PATH" ;;
+esac
+case ":$PATH:" in
+  *":$_asdf_shims:"*) : ;;
+  *) PATH="$_asdf_shims:$PATH" ;;
+esac
 
-PATH="${_asdf_bin}:${_asdf_shims}:$PATH"
 unset -v _asdf_bin _asdf_shims
 
-# shellcheck source=lib/asdf.sh
-. "${ASDF_DIR}/lib/asdf.sh"
+# The asdf function is a wrapper so we can export variables
+asdf() {
+  case $1 in
+  "shell")
+    if ! shift; then
+      printf '%s\n' 'asdf: Error: Failed to shift' >&2
+      return 1
+    fi
 
+    # Invoke command that needs to export variables.
+    eval "$(asdf export-shell-version sh "$@")" # asdf_allow: eval
+    ;;
+  *)
+    # Forward other commands to asdf script.
+    command asdf "$@" # asdf_allow: ' asdf '
+    ;;
+  esac
+}

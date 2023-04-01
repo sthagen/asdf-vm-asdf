@@ -262,6 +262,69 @@ Adicione a seguinte linha ao seu `~/.zshrc`:
 . /opt/asdf-vm/asdf.sh
 ```
 
+::: details PowerShell Core & Git
+
+Adicione a seguinte linha ao seu `~/.config/powershell/profile.ps1`:
+
+```shell
+. "$HOME/.asdf/asdf.ps1"
+```
+
+:::
+
+::: details PowerShell Core & Homebrew
+
+Adicione `asdf.ps1` ao seu `~/.config/powershell/profile.ps1` através do comando:
+
+```shell:no-line-numbers
+echo -e "\n. \"$(brew --prefix asdf)/libexec/asdf.ps1\"" >> ~/.config/powershell/profile.ps1
+```
+
+:::
+
+::: details PowerShell Core & Pacman
+
+Adicione a seguinte linha ao seu `~/.config/powershell/profile.ps1`:
+
+```shell
+. /opt/asdf-vm/asdf.ps1
+```
+
+:::
+
+::: details Nushell & Git
+
+Adicione `asdf.nu` ao seu `~/.config/nushell/config.nu` através do comando:
+
+```shell
+"\nlet-env ASDF_NU_DIR = ($env.HOME | path join '.asdf')\n source " + ($env.HOME | path join '.asdf/asdf.nu') | save --append $nu.config-path
+```
+
+Ao concluir atualizará automaticamente
+:::
+
+::: details Nushell & Homebrew
+
+Adicione `asdf.nu` ao seu `~/.config/nushell/config.nu` através do comando:
+
+```shell:no-line-numbers
+"\nlet-env ASDF_NU_DIR = (brew --prefix asdf | str trim | into string | path join 'libexec')\n source " +  (brew --prefix asdf | into string | path join 'libexec/asdf.nu') | save --append $nu.config-path
+```
+
+Ao concluir atualizará automaticamente
+:::
+
+::: details Nushell & Pacman
+
+Adicione `asdf.nu` ao seu `~/.config/nushell/config.nu` através do comando:
+
+```shell
+"\nlet-env ASDF_NU_DIR = '/opt/asdf-vm/'\n source /opt/asdf-vm/asdf.nu" | save --append $nu.config-path
+```
+
+Ao concluir atualizará automaticamente
+:::
+
 ::: details POSIX Shell & Git
 
 Adicione a seguinte linha ao seu `~/.profile`:
