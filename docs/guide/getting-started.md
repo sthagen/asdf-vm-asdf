@@ -183,14 +183,14 @@ $ echo "\n"'set edit:completion:arg-completer[asdf] = $_asdf:arg-completer~' >> 
 
 ##### Add shims directory to path (required)
 
-Add the following to `~/.bash_profile`:
+Add the following to `~/.zshrc`:
 ```shell
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 ```
 
 ###### Custom data directory (optional)
 
-Add the following to `~/.bash_profile` above the line you added above:
+Add the following to `~/.zshrc` above the line you added above:
 
 ```shell
 export ASDF_DATA_DIR="/your/custom/data/dir"
